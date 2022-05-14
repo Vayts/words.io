@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div class="app">
+    <div class="authentication">
+      <div class="authentication__main">
+        <p class="authentication__title">Создайте ваш аккаунт</p>
+        <p class="authentication__error-text" id="registerErrorText"></p>
+        <form id="registerForm" class="authentication__form">
+          <div class="authentication__input-holder">
+            <input class="authentication__input" id="registerLogin" type="text" min="5" max="20" name="registerLogin" required>
+            <label class="authentication__label" for="registerLogin">Логин</label>
+          </div>
+          <div class="authentication__input-holder">
+            <input class="authentication__input" id="registerPassword" type="password" min="6" max="255" name="registerPassword" required>
+            <label class="authentication__label" for="registerPassword">Пароль</label>
+          </div>
+          <div class="authentication__input-holder">
+            <input class="authentication__input" id="registerConfirmPassword" type="password" min="6" max="255" name="registerConfirmPassword" required>
+            <label class="authentication__label" for="registerConfirmPassword">Подтверждение пароля</label>
+          </div>
+          <div class="validation">
+            <ul class="validation__list" id="validationList"></ul>
+          </div>
+          <button class="authentication__button button" id="registerButton" type="button">Регистрация</button>
+        </form>
+        <p class="authentication__link-holder">Уже есть аккаунт? <a class="authentication__link" href="/login">Войдите.</a></p>
+      </div>
+      <div class="authentication__sub">
+        <p class="authentication__title">Words.io</p>
+        <ul class="authentication__feature-list">
+          <li class="authentication__feature">- 30.000 слов в словаре</li>
+          <li class="authentication__feature">- более 1000 игровых слов</li>
+          <li class="authentication__feature">- возможность дополнять словарь</li>
+          <li class="authentication__feature">- настраиваемая сложность</li>
+          <li class="authentication__feature">- рейтинговая система</li>
+        </ul>
+        <a href="#" class="authentication__version-link">v. 0.2.11</a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

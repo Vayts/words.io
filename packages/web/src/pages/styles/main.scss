@@ -1,0 +1,274 @@
+@import "mixins";
+@import "animation";
+@import 'default';
+@import "variables";
+
+
+.header {
+  background-color: #ffffff;
+  display: flex;
+  align-items: flex-end;
+  padding: 15px 30px;
+  box-shadow: rgba(0, 0, 0, 0.32) 0px 0px 3px 0px;
+  position: fixed;
+  width: 100%;
+  //color: #ffffff;
+
+  .container {
+    flex-basis: 80%;
+  }
+
+  &__logo {
+    flex-basis: 20%;
+  }
+
+  &__logo-text {
+    font-size: 35px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-family: 'Major Mono Display', monospace;
+    margin: 0;
+  }
+
+  .navigation {
+    &__list {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    &__item {
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 20px;
+      vertical-align: bottom;
+      position: relative;
+
+      &:after {
+        background: none repeat scroll 0 0 transparent;
+        bottom: -4px;
+        content: "";
+        display: block;
+        height: 1px;
+        left: 50%;
+        position: absolute;
+        transition: width 0.3s ease 0s, left 0.3s ease 0s;
+        width: 0;
+      }
+
+      &:hover:after {
+        background-color: black;
+        width: 100%;
+        left: 0;
+      }
+
+      &:first-child {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  margin: 0;
+  &__login {
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0 30px;
+    margin: 0;
+  }
+}
+
+.main-holder {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.settings {
+  margin-top: 40px;
+  font-weight: 400;
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  //
+  &__holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+  }
+
+  &__button {
+    margin-top: 40px;
+    padding: 8px 80px;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 25px;
+    //text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: left;
+  }
+
+  &__display {
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 20px;
+  }
+
+  &__input {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  &__pts-holder {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    width: 100px;
+
+    //&_win {
+    //  color: #00da00;
+    //}
+    //
+    //&_loose {
+    //  color: #c00001;
+    //}
+  }
+
+  &__text {
+    display: inline-block;
+    &_win {
+      color: #7cd04c;
+    }
+    &_loose {
+      color: #d75353;
+    }
+  }
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    width: 360px;
+    height: 15px;
+    background-color: rgba(178, 178, 178, 0.18);
+  }
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 0;
+    height: 15px;
+    width: 15px;
+    background-color: $mainColor;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus::-webkit-slider-runnable-track {
+    background-color: rgba(178, 178, 178, 0.28);
+  }
+}
+
+.gameplay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px dashed #1d1d1d;
+  border-bottom: none;
+  border-top: none;
+  width: 100%;
+  margin-top: 65px;
+
+  &__wrapper {
+    background-color: #ffffff;
+    padding: 15px;
+    position: relative;
+
+    //&:before {
+    //  content: '';
+    //  height: 160px;
+    //  width: 110px;
+    //  position: absolute;
+    //  top: -70px;
+    //  left: -70px;
+    //  transform: rotate(45deg);
+    //  background-color: rgba(255, 255, 255, 1)
+    //}
+  }
+
+  &__row {
+    color: transparent;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    flex-basis: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+
+    &.active {
+      color: #ffffff;
+      .gameplay__col {
+        height: 55px;
+        width: 45px;
+        background-color: $mainColor;
+      }
+    }
+  }
+  &__col {
+    background-color: #626262;
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    width: 35px;
+    font-size: 30px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+}
+
+
+
+
+
+
+

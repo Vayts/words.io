@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>VAMP</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+  <div class="header__logo">
+    <p class="header__logo-text">Words.io</p>
+  </div>
+  <div class="container">
+    <nav class="navigation">
+      <ul class="navigation__list">
+        <li class="navigation__item navigation__item_big">Играть</li>
+        <li class="navigation__item">Таблица лидеров</li>
+        <li class="navigation__item">Словарь</li>
+      </ul>
+    </nav>
+  </div>
+  <ul class="user">
+    <li class="user__pts"><span id="userPts">0000000</span>&#32;pts</li>
+    <li class="user__login" id="userName"></li>
+  </ul>
+</header>
+<main>
+  <div class="container">
+    <div class="main-holder">
+      <div class="settings" id="settingsBlock">
+        <div class="settings__holder">
+          <label for="wordLengthInput" class="settings__label">Длина слова</label>
+          <span class="settings__display" id="wordLengthDisplay"></span>
+          <input class="settings__input" id="wordLengthInput" name="wordLength" type="range" min="4" max="10" step="1"
+                 value="6">
+        </div>
+        <div class="settings__holder">
+          <label for="tryCounterInput" class="settings__label">Количество попыток</label>
+          <span class="settings__display" id="tryCounterDisplay"></span>
+          <input class="settings__input" id="tryCounterInput" name="tryCounter" type="range" min="3" max="8" step="1"
+                 value="5">
+        </div>
+        <div class="settings__pts-holder">
+          <div class="settings__result">
+            <p class="settings__title settings__title_win">Шанс</p>
+            <p class="settings__text settings__text_win">+<span id="winPtsCounter"></span><span>&#32;pts</span></p>
+          </div>
+          <div class="settings__result">
+            <p class="settings__title settings__title_loose">Риск</p>
+            <p class="settings__text settings__text_loose">-<span id="loosePtsCounter"></span><span>&#32;pts</span></p>
+          </div>
+        </div>
+        <button type="button" class="button settings__button" id="settingsButton">Готово</button>
+      </div>
+      <div class="gameplay" id="gameplayBlock" style="display: none">
+        <div class="gameplay__wrapper">
+          <table class="gameplay__table" id="gameplayTable">
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,170 @@
+@import "mixins";
+@import "animation";
+@import 'default';
+
+
+.authentication {
+  box-shadow: 4px 1px 13px 5px rgba(63, 66, 68, 0.3);
+  height: 100vh;
+  width: 950px;
+  display: flex;
+  background-color: #ffffff;
+  overflow: hidden;
+
+  &__main {
+    flex-basis: 55%;
+    height: 100%;
+    padding: 15px 30px;
+  }
+
+  &__sub {
+    flex-basis: 45%;
+    height: 100%;
+    background-color: $mainColor;
+    padding: 80px 30px;
+    color: #ffffff;
+    position: relative;
+  }
+
+  &__title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    margin-top: 20px;
+    width: 80%;
+
+
+    span {
+      color: $mainColor;
+    }
+  }
+
+  &__error-text {
+    height: 20px;
+    color: #f5002c;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+  }
+
+  &__input {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 18px 10px 8px 10px;
+    border: 2px solid #93939359;
+    border-radius: 3px;
+    vertical-align: bottom;
+  }
+
+  &__label {
+    position: absolute;
+    top: 40%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #939393;
+    pointer-events: none;
+  }
+
+  &__input:focus + &__label {
+    top: 20%;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+
+  &__input-holder {
+    position: relative;
+
+    &.filled {
+      .authentication__label {
+        top: 20%;
+        font-size: 12px;
+      }
+    }
+  }
+
+  &__button {
+    flex-basis: 20%;
+    padding: 10px 0;
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    font-size: 15px;
+    margin: 5px 0 5px 0;
+  }
+
+  &__link-holder {
+    font-size: 14px;
+    color: #939393;
+  }
+
+  &__link {
+    font-weight: 500;
+    color: $mainColor;
+  }
+
+  &__version-link {
+    position: absolute;
+    top: 93%;
+    right: 5%;
+    color: #ffffff;
+  }
+
+  &__feature {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+}
+
+.validation {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  margin-bottom: 15px;
+
+  &__list {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  &__item, &__item_fail {
+    padding: 5px;
+    color: #000000;
+    font-size: 12px;
+    margin: 5px;
+    display: inline-block;
+    height: 25px;
+    border-radius: 10px;
+
+    &:before {
+      display: inline-block;
+      font-size: 12px;
+      height: 15px;
+      max-width: 25px;
+      border-radius: 50%;
+      padding: 0 6px;
+    }
+  }
+
+  &__item {
+    background-color: #AFE78E8E;
+    &:before {
+      color: #198824;
+      //content: '\2713';
+    }
+  }
+
+  &__item_fail {
+    background-color: #EE7889FF;
+    &:before {
+      color: #88041c;
+      //content: '\2713';
+    }
+  }
+
+}
