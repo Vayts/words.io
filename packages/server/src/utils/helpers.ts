@@ -6,7 +6,8 @@ export function getRandomNum(min: number, max: number): number {
 }
 
 export function analyseWord(userWord: string, word: string): Record<string, number[]> {
-  const result: { partialMatch: number[]; fullMatch: number[] } = {
+  const result: { partialMatch: number[]; fullMatch: number[]; noMatch: number[] } = {
+    noMatch: [],
     partialMatch: [],
     fullMatch: [],
   };
@@ -16,6 +17,9 @@ export function analyseWord(userWord: string, word: string): Record<string, numb
     }
     if (word[index] === el.toLowerCase()) {
       result.fullMatch.push(index);
+    }
+    if (!word.includes(el.toLowerCase())) {
+      result.noMatch.push(index);
     }
   });
   return result;

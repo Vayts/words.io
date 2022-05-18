@@ -90,6 +90,7 @@ export function appendChild(id, value): boolean {
 export function clearRow(cols, start) {
   cols.forEach((el, index) => {
     if (index >= start) {
+      el.classList.remove('filled');
       el.innerText = '';
     }
   });
@@ -111,21 +112,6 @@ export function enableKeyEvent(func) {
   document.addEventListener('keydown', func);
 }
 
-export function highlightLetter(state, arr, color) {
-  const row = state.rowList[state.currentRow];
-  const colInRow = row.childNodes;
-  arr.forEach((el) => {
-    colInRow[el].style.backgroundColor = color;
-  });
-}
-
-export function highlightWord(state) {
-  const row = state.rowList[state.currentRow];
-  const colInRow = row.childNodes;
-  colInRow.forEach((el) => {
-    el.style.backgroundColor = '#33944AFF';
-  });
-}
 export function createValidateLi(text, className) {
   const li = document.createElement('li');
   li.classList.add(className);
