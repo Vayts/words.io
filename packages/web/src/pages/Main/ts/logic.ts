@@ -6,12 +6,12 @@ import {
   getInputValue,
   getNodeList,
   getWord,
+  setDisplayNone,
   setErrorAnim,
   setTextValue,
 } from '../../../utils/ts/helpers';
 import 'core-js/es/reflect';
 import 'regenerator-runtime/runtime';
-// import { ModalResult } from '../../../components/Modal/modalResult';
 
 export function getGameValue(wordLength, tryCounter): [number, number] {
   const winValue = wordLength * 8 - tryCounter * 3;
@@ -61,19 +61,20 @@ export function generateGameField(wordLength, tryCounter) {
 }
 
 export function startGame(state) {
-  const settings = <HTMLElement>getElement('settingsBlock');
+  setDisplayNone('leaderboardBlock');
+  setDisplayNone('vocabularyBlock');
   const gameplay = <HTMLElement>getElement('gameplayBlock');
   const table = <HTMLElement>getElement('gameplayTable');
   const button = <HTMLElement>getElement('playButton');
   state.lengthCounter = getInputValue('wordLengthInput');
   state.tryCounter = getInputValue('tryCounterInput');
   state.settings.closeModal();
-  settings.style.display = 'none';
   gameplay.style.display = 'flex';
   table.append(generateGameField(state.lengthCounter, state.tryCounter));
   button.style.display = 'none';
   fillState(state);
   generateWord(state);
+  changeGameValue(state);
   const func = (event) => {
     enterTheLetter(state, event, func);
   };
@@ -105,8 +106,7 @@ async function checkWord(state, func): Promise<any> {
       .then((response) => response.json())
       .then((value: any) => {
         if (value.message === 'WIN') {
-          highlightLetter(state, value.wordAnalyse, func, false);
-          resolve('WIN');
+          resolve(value);
         }
 
         if (value.message === 'WORD_DOESNT_EXIST') {
@@ -114,13 +114,11 @@ async function checkWord(state, func): Promise<any> {
         }
 
         if (value.message === 'WORD_EXIST') {
-          highlightLetter(state, value.wordAnalyse);
-          resolve('CONTINUE');
+          resolve(value);
         }
 
         if (value.message === 'LOOSE') {
-          highlightLetter(state, value.wordAnalyse, func, true);
-          resolve('LOOSE');
+          resolve(value);
         }
 
         reject('Error!');
@@ -140,7 +138,6 @@ export function loadUserInfo(state) {
 
 function enterTheLetter(state, event, func) {
   const regEx = /[а-яА-ЯёЁ]/;
-
   if (event.key === 'Backspace') {
     removeLetter(state);
     return true;
@@ -152,16 +149,6 @@ function enterTheLetter(state, event, func) {
   }
 
   return false;
-}
-
-function gameWin(state, func) {
-  highlightWord(state);
-  disableKeyEvent(func);
-}
-
-export function looseGame(state, func) {
-  disableKeyEvent(func);
-  gameResult(state, 'loose', state.looseValue);
 }
 
 function nextRow(state) {
@@ -187,7 +174,21 @@ function gameProcess(state, keyValue, func) {
   if (nextLetter % state.lengthCounter === 0) {
     // Заполненный рядок
     checkWord(state, func)
-      .then((value: string) => {
+      .then((value: { message: string; wordAnalyse: any; userWord: string }) => {
+        if (value.message === 'WIN') {
+          state.word = value.userWord;
+          highlightLetter(state, value.wordAnalyse, func, false);
+        }
+
+        if (value.message === 'WORD_EXIST') {
+          highlightLetter(state, value.wordAnalyse, func);
+        }
+
+        if (value.message === 'LOOSE') {
+          state.word = value.userWord;
+          highlightLetter(state, value.wordAnalyse, func, true);
+        }
+
         if (Number(state.currentRow) !== state.tryCounter - 1) {
           state.currentCol += 1;
           nextRow(state);
@@ -212,8 +213,10 @@ function removeLetter(state) {
   return false;
 }
 
-export function gameResult(state, result, value) {
-  state.modal.fillModal('mainModal', result, value, state.userPts);
+export function gameResult(state, result, value, func) {
+  disableKeyEvent(func);
+  state.modal.fillModal('mainModal', result, value, state);
+  loadUserInfo(state);
 }
 
 export function highlightLetter(state, wordAnalyse, func, loose = false) {
@@ -247,17 +250,101 @@ export function highlightLetter(state, wordAnalyse, func, loose = false) {
       clearInterval(interval);
       if (loose === true) {
         setTimeout(() => {
-          looseGame(state, func);
+          gameResult(state, 'loose', state.looseValue, func);
         }, 450);
         return false;
       }
       if (fullMatch.length === colInRow.length) {
         setTimeout(() => {
-          gameResult(state, 'win', state.winValue);
+          gameResult(state, 'win', state.winValue, func);
         }, 450);
       }
 
       enableKeyEvent(func);
     }
   }, time);
+}
+
+
+
+export function playGame(state) {
+  state.settings.openModal();
+  setDisplayNone('leaderboardBlock');
+}
+
+export function endGame(state) {
+  const playButton = <HTMLElement>getElement('playButton');
+  playButton.style.display = 'block';
+  const playTable = <HTMLElement>getElement('gameplayTable');
+  playTable.innerHTML = '';
+  state.modal.closeModal();
+  state.looseValue = null;
+  state.winValue = null;
+  state.tryCounter = null;
+  state.lengthCounter = null;
+  state.rowList = null;
+  state.colList = null;
+  state.currentRow = null;
+  state.currentCol = null;
+  state.firstLetter = null;
+  state.word = null;
+  return state;
+}
+
+export function checkLastGame(state) {
+  fetch('http://localhost:3000/user/last')
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.message === 'NOT_FINISHED') {
+        continueLastGame(state, data);
+      } else {
+        const button = <HTMLElement>getElement('playButton');
+        button.style.display = 'block';
+      }
+    });
+}
+
+function continueLastGame(state, obj) {
+  const words = obj.words === null ? null : obj.words.split('');
+  const table = <HTMLElement>getElement('gameplayTable');
+  const gameplay = <HTMLElement>getElement('gameplayBlock');
+  state.looseValue = obj.loose;
+  state.winValue = obj.win;
+  state.lengthCounter = obj.length;
+  state.tryCounter = obj.tryCounter;
+  state.firstLetter = obj.currentTry * obj.length;
+  state.currentRow = obj.currentTry;
+  state.currentCol = obj.currentTry * obj.length;
+  gameplay.style.display = 'flex';
+  table.append(generateUsedGameField(state.lengthCounter, state.tryCounter, words));
+  state.rowList = getNodeList('.gameplay__row');
+  state.colList = getNodeList('.gameplay__col');
+  const func = (event) => {
+    enterTheLetter(state, event, func);
+  };
+  document.addEventListener('keydown', func);
+}
+
+export function generateUsedGameField(wordLength, tryCounter, words) {
+  const dataFragment = document.createDocumentFragment();
+  let counter = 0;
+  for (let i = 0; i < tryCounter; i += 1) {
+    const tr = document.createElement('tr');
+    tr.classList.add('gameplay__row');
+
+    for (let m = 0; m < wordLength; m += 1) {
+      const th = document.createElement('th');
+      th.classList.add('gameplay__col');
+
+      if (words !== null && words[counter] !== undefined) {
+        th.classList.add('blocked');
+        th.innerText = words[counter].toUpperCase();
+      }
+      counter += 1;
+      tr.append(th);
+    }
+
+    dataFragment.append(tr);
+  }
+  return dataFragment;
 }

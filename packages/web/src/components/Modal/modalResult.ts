@@ -14,12 +14,14 @@ export class ModalResult implements Modal {
 
   private interval: any;
 
-  fillModal(modalId, result, value, pts) {
+  fillModal(modalId, result, value, state) {
+    console.log(state);
     this.result = result;
     this.value = value;
-    this.pts = pts;
+    this.pts = state.userPts;
     this.id = modalId;
     setTextValue('modalStart', this.pts.toString());
+    setTextValue('modalWord', state.word);
     this.openModal();
   }
 

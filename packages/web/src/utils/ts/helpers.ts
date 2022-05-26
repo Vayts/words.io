@@ -27,6 +27,35 @@ export function setTextValue(id, text): boolean {
   return false;
 }
 
+export function getTextValue(id): boolean | string {
+  const node = document.getElementById(id);
+
+  if (node) {
+    return node.textContent;
+  }
+  return false;
+}
+
+export function setDisplayNone(id): boolean {
+  const node = document.getElementById(id);
+
+  if (node) {
+    node.style.display = 'none';
+    return true;
+  }
+  return false;
+}
+
+export function setDisplayFlex(id): boolean {
+  const node = document.getElementById(id);
+
+  if (node) {
+    node.style.display = 'flex';
+    return true;
+  }
+  return false;
+}
+
 export function setInputValue(id, value): boolean {
   const input = <HTMLInputElement>document.getElementById(id);
 

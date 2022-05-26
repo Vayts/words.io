@@ -25,8 +25,8 @@ export function analyseWord(userWord: string, word: string): Record<string, numb
   return result;
 }
 
-export function generateJWT(res: Response, userId: string, userLogin: string) {
-  const token = jwt.sign({ id: userId, login: userLogin }, <string>process.env.JWT_SECRET, {
+export function generateJWT(res: Response, userId: string, userLogin: string, userRole: string) {
+  const token = jwt.sign({ id: userId, login: userLogin, role: userRole }, <string>process.env.JWT_SECRET, {
     expiresIn: Number(process.env.JWT_EXPIRES) * 24 * 60 * 60 * 1000,
   });
 
@@ -36,4 +36,10 @@ export function generateJWT(res: Response, userId: string, userLogin: string) {
   };
 
   res.cookie('jwt', token, cookieOptions);
+}
+
+export function getGameValue(wordLength: number, tryCounter: number): [number, number] {
+  const winValue = wordLength * 8 - tryCounter * 3;
+  const looseValue = Math.floor(winValue * 0.8);
+  return [winValue, looseValue];
 }

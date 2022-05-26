@@ -63,7 +63,7 @@ export class AuthController {
         if (result.length > 0) {
           const checkPassword = await bcrypt.compare(req.body.loginInPassword, result[0].password);
           if (checkPassword) {
-            generateJWT(res, result[0].id, result[0].login);
+            generateJWT(res, result[0].id, result[0].login, result[0].role);
             return res.redirect(302, '/main');
           }
         }

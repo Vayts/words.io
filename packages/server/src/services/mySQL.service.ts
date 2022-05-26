@@ -67,4 +67,16 @@ export class MySQLService {
       });
     });
   }
+
+  delete(query: string) {
+    return new Promise((resolve, reject) => {
+      this.db.query(query, (err: Error, result: any) => {
+        if (err) {
+          reject({ code: 409, message: 'CONNECTION_ERROR' });
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
 }

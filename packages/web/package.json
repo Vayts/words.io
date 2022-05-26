@@ -26,7 +26,6 @@
     "jest-transform-stub": "2.0.0",
     "loc-i18next": "0.1.4",
     "mini-css-extract-plugin": "2.5.3",
-    "node-fetch": "^3.2.0",
     "prettier": "2.5.1",
     "regenerator-runtime": "^0.13.9",
     "sass": "1.49.0",

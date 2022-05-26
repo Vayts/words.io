@@ -1,5 +1,5 @@
 import { Modal } from '../../interfaces/Modal.interface';
-import { getElement } from '../../utils/ts/helpers';
+import { addListener, getElement } from '../../utils/ts/helpers';
 
 export class ModalSettings implements Modal {
   id: string;
@@ -8,12 +8,11 @@ export class ModalSettings implements Modal {
 
   constructor(id) {
     this.id = id;
+    addListener('closeSettingsModal', 'click', this.closeModal.bind(this));
   }
 
   closeModal(): void {
     this.modal.classList.remove('modal_active');
-    // clearInterval(this.interval);
-    // this.clearModal();
   }
 
   openModal(): void {

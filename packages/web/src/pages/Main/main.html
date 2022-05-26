@@ -1,91 +1,147 @@
 <!doctype html>
-<html lang="en">
+<html lang='en'>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset='UTF-8'>
+  <meta name='viewport'
+        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
   <title>VAMP</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,900&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    href='https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,900&display=swap'
+    rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap' rel='stylesheet'>
+  <link
+    href='https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'
+    rel='stylesheet'>
 </head>
 <body>
-<header class="header">
-  <div class="header__logo">
-    <p class="header__logo-text">Word.io</p>
+<header class='header'>
+  <div class='header__logo'>
+    <p class='header__logo-text'>Word.io</p>
   </div>
   <button class='header__button button' id='playButton'>Играть</button>
-<!--  <div class="container">-->
-<!--    <nav class="navigation">-->
-<!--      <ul class="navigation__list">-->
-<!--        <li class="navigation__item navigation__item_big">Играть</li>-->
-<!--        <li class="navigation__item">Таблица лидеров</li>-->
-<!--        <li class="navigation__item">Словарь</li>-->
-<!--      </ul>-->
-<!--    </nav>-->
-<!--  </div>-->
-  <ul class="user">
-    <li class="user__pts"><span id="userPts">000</span>&#32;pts</li>
-    <li class="user__login" id="userName"></li>
-  </ul>
+  <div class='control'>
+    <img src='/photo/leaderboard.svg' class='control__item' id='leaderboardButton' alt='leaderBoard'>
+    <img src='/photo/words.svg' class='control__item' alt='vocabulary' id='vocabularyButton'>
+    <ul class='user'>
+      <li class='user__pts'><span id='userPts'>000</span>&#32;pts</li>
+      <li class='user__login' id='userName'></li>
+    </ul>
+  </div>
 </header>
 <main>
-  <div class="container">
-    <div class="main-holder">
-      <div class="gameplay" id="gameplayBlock" style="display: none">
-        <div class="gameplay__wrapper">
-          <table class="gameplay__table" id="gameplayTable">
+  <div class='container'>
+    <div class='main-holder'>
+      <div class='gameplay' id='gameplayBlock' style='display: none'>
+        <div class='gameplay__wrapper'>
+          <table class='gameplay__table' id='gameplayTable'>
           </table>
+        </div>
+      </div>
+      <div class='leaderboard' id='leaderboardBlock'>
+        <!--        <h1>Таблица лидеров</h1>-->
+        <ul class='leaderboard__list' id='leaderboardTable'>
+
+        </ul>
+      </div>
+      <div class='vocabulary' id='vocabularyBlock'>
+        <div class='vocabulary__user' id='vocabularyUser'>
+          <div class='vocabulary__control-panel'>
+            <ul class='vocabulary__control-list' id='controlList'>
+              <li class='vocabulary__control-item' data-sort='all' id='vocabularyButtonAll'>Все&#32;(<span id='vocabularyAll'>0</span>)</li>
+              <li class='vocabulary__control-item' data-sort='0' id='vocabularyButtonCheck'>Проверяется&#32;(<span id='vocabularyCheck'>0</span>)</li>
+              <li class='vocabulary__control-item' data-sort='1' id='vocabularyButtonAdded'>Одобрено&#32;(<span id='vocabularyAdded'>0</span>)</li>
+              <li class='vocabulary__control-item' data-sort='2' id='vocabularyButtonRejected'>Отклонено&#32;(<span id='vocabularyRejected'>0</span>)</li>
+            </ul>
+          </div>
+          <div class='vocabulary__words'>
+            <div class='vocabulary__add-word' id='vocabularyAddWord'>
+              <p class='vocabulary__message' id='vocabularyMessage'></p>
+              <form class='vocabulary__form' id='vocabularyForm'>
+                <input class='vocabulary__input' id='vocabularyInput' type='text' name='word'>
+                <button type='submit' class='vocabulary__add-button' id='vocabularyAddButton'>
+                  <span></span>
+                  <span></span>
+                </button>
+              </form>
+            </div>
+            <ul class='vocabulary__words-list' id='vocabularyList'>
+            </ul>
+          </div>
+        </div>
+        <div class='vocabulary__admin' id='vocabularyAdmin'>
+            <div class='vocabulary__admin-word-holder'>
+                <div class='vocabulary__admin-word'>
+                  <p class='vocabulary__admin-word-text' id='adminWord'></p>
+                  <div class='vocabulary__word-info'>
+                    <span id='vocabularyUserInfo'></span>
+                    <span id='vocabularyTime'></span>
+                  </div>
+                </div>
+                <div class='vocabulary__admin-control'>
+                  <ul class='vocabulary__admin-control-list' id='adminControlList'>
+                    <li class='vocabulary__admin-control-item' data-control='add'><img src='/photo/add.svg' class='vocabulary__admin-control-img' alt=''></li>
+                    <li class='vocabulary__admin-control-item' data-control='skip'><img src='/photo/skip.svg' class='vocabulary__admin-control-img' alt=''></li>
+                    <li class='vocabulary__admin-control-item' data-control='reject'><img src='/photo/cancel.svg' class='vocabulary__admin-control-img' alt=''></li>
+                    <li class='vocabulary__admin-control-item' data-control='delete'><img src='/photo/delete.svg' class='vocabulary__admin-control-img' alt=''></li>
+                  </ul>
+                </div>
+            </div>
         </div>
       </div>
     </div>
   </div>
 </main>
-  <div class='modal' id='mainModal' aria-hidden='true'>
-    <div class='modal__wrap'>
-      <div class='modal__window'>
-        <p class='modal__title' id='modalTitle'></p>
-        <p class='modal__word' id='modalWord'>Страх</p>
-        <p class='modal__rating'>Изменение рейтинга</p>
-        <p class='modal__text' id='modalText'><span id='modalStart'>0000</span> &rarr; <span class='modal__counter' id='modalCounter'>0000</span><span class='modal__result' id='modalResult'></span></p>
-        <button class='modal__button' id='modalButton'>Продолжить</button>
+<div class='modal' id='mainModal' aria-hidden='true'>
+  <div class='modal__wrap'>
+    <div class='modal__window'>
+      <p class='modal__title' id='modalTitle'></p>
+      <p class='modal__word' id='modalWord'>Заглушка</p>
+      <p class='modal__rating'>Изменение рейтинга</p>
+      <p class='modal__text' id='modalText'><span id='modalStart'>0000</span> &rarr; <span class='modal__counter'
+                                                                                           id='modalCounter'>0000</span><span
+        class='modal__result' id='modalResult'></span></p>
+      <button class='modal__button' id='modalButton'>Продолжить</button>
+    </div>
+  </div>
+</div>
+<div class='modal' id='settingsModal' aria-hidden='true'>
+  <div class='modal__wrap'>
+    <div class='modal__window'>
+      <div class='modal__title'>
+        <p>Настройки</p>
+        <div class='modal__close-button' id='closeSettingsModal'>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class='settings' id='settingsBlock'>
+        <div class='settings__holder'>
+          <label for='wordLengthInput' class='settings__label'>Длина слова</label>
+          <span class='settings__display' id='wordLengthDisplay'></span>
+          <input class='settings__input' id='wordLengthInput' name='wordLength' type='range' min='4' max='10' step='1'
+                 value='6'>
+        </div>
+        <div class='settings__holder'>
+          <label for='tryCounterInput' class='settings__label'>Количество попыток</label>
+          <span class='settings__display' id='tryCounterDisplay'></span>
+          <input class='settings__input' id='tryCounterInput' name='tryCounter' type='range' min='3' max='8' step='1'
+                 value='5'>
+        </div>
+        <div class='settings__pts-holder'>
+          <div class='settings__result'>
+            <p class='settings__title settings__title_win'>Шанс</p>
+            <p class='settings__text settings__text_win'>+<span id='winPtsCounter'></span><span>&#32;pts</span></p>
+          </div>
+          <div class='settings__result'>
+            <p class='settings__title settings__title_loose'>Риск</p>
+            <p class='settings__text settings__text_loose'>-<span id='loosePtsCounter'></span><span>&#32;pts</span></p>
+          </div>
+        </div>
+        <button type='button' class='button settings__button' id='settingsButton'>Готово</button>
       </div>
     </div>
   </div>
-  <div class='modal' id='settingsModal' aria-hidden='true'>
-    <div class='modal__wrap'>
-      <div class='modal__window'>
-        <p class='modal__title'>Настройки</p>
-              <div class="settings" id="settingsBlock">
-                <div class="settings__holder">
-                  <label for="wordLengthInput" class="settings__label">Длина слова</label>
-                  <span class="settings__display" id="wordLengthDisplay"></span>
-                  <input class="settings__input" id="wordLengthInput" name="wordLength" type="range" min="4" max="10" step="1"
-                         value="6">
-                </div>
-                <div class="settings__holder">
-                  <label for="tryCounterInput" class="settings__label">Количество попыток</label>
-                  <span class="settings__display" id="tryCounterDisplay"></span>
-                  <input class="settings__input" id="tryCounterInput" name="tryCounter" type="range" min="3" max="8" step="1"
-                         value="5">
-                </div>
-                <div class="settings__pts-holder">
-                  <div class="settings__result">
-                    <p class="settings__title settings__title_win">Шанс</p>
-                    <p class="settings__text settings__text_win">+<span id="winPtsCounter"></span><span>&#32;pts</span></p>
-                  </div>
-                  <div class="settings__result">
-                    <p class="settings__title settings__title_loose">Риск</p>
-                    <p class="settings__text settings__text_loose">-<span id="loosePtsCounter"></span><span>&#32;pts</span></p>
-                  </div>
-                </div>
-                <button type="button" class="button settings__button" id="settingsButton">Готово</button>
-              </div>
-      </div>
-    </div>
-  </div>
+</div>
 </body>
 </html>
