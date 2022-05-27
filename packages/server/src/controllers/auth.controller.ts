@@ -45,7 +45,7 @@ export class AuthController {
         return dbRequest.create(query, column);
       })
       .then(() => {
-        res.status(200).send({ message: 'REGISTERED' });
+        res.redirect(302, '/main');
       })
       .catch((value: { code: number; message: string }) => {
         res.status(value.code).send({ message: value.message });

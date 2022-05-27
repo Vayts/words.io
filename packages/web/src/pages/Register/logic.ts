@@ -4,7 +4,7 @@ import {
   getElement,
   getInputValue,
   setErrorAnim,
-  setInputValue,
+  setInputValue, setLocalStorageItem,
   setTextValue,
 } from '../../utils/ts/helpers';
 
@@ -45,8 +45,17 @@ export function collectRegisterData(): boolean {
       method: 'POST',
       body: data,
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.redirected) {
+          setInputValue('registerLogin', '');
+          window.location.href = res.url;
+          return true;
+        }
+
+        return res.json();
+      })
       .then((result: any) => {
+
         if ((result.message === 'LOGIN_IN_USE')) {
           const login = <HTMLElement>getElement('registerLogin');
           setTextValue('registerErrorText', 'Логин уже используется');
