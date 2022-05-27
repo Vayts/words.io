@@ -72,7 +72,6 @@ export class WordsController {
       dbRequest
         .read(`SELECT * FROM user_table WHERE ID = ${req.user.id}`)
         .then((value: User[]) => {
-          console.log(value);
           tryCounter = value[0].tryCounter;
           currentTry = value[0].currentTry;
           looseValue = value[0].loose;
@@ -80,7 +79,7 @@ export class WordsController {
           userWord = value[0].word;
           userPts = value[0].pts;
           words = value[0].words === null ? '' : value[0].words;
-          wordAnalyse = analyseWord(userWord, word);
+          wordAnalyse = analyseWord(word, userWord);
           return dbRequest.read(`SELECT word FROM words WHERE word = "${word.toLowerCase()}"`);
         })
         .then((value: any) => {
