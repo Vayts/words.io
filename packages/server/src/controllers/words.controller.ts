@@ -55,6 +55,7 @@ export class WordsController {
     req.on('end', () => {
       const dbRequest = MySQLService.getInstance();
       const word = data.slice(1, data.length - 1);
+      console.log(word);
       let tryCounter: number;
       let currentTry: number;
       let looseValue: number;
