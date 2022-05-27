@@ -34,6 +34,7 @@ export class WordsController {
     dbRequest.read(`SELECT word FROM gameword_table WHERE CHAR_LENGTH(word) = ${wordLength}`).then((response: any) => {
       const arr = response.map((el: any) => el.word).filter((el: any) => el.length === Number(wordLength));
       const randomNum = getRandomNum(0, arr.length - 1);
+      console.log(arr[randomNum]);
       dbRequest.update(`UPDATE user_table SET ? WHERE ID = ${req.user.id}`, {
         word: arr[randomNum],
         isPlaying: true,
