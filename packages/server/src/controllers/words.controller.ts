@@ -72,6 +72,7 @@ export class WordsController {
       dbRequest
         .read(`SELECT * FROM user_table WHERE ID = ${req.user.id}`)
         .then((value: User[]) => {
+          console.log(value);
           tryCounter = value[0].tryCounter;
           currentTry = value[0].currentTry;
           looseValue = value[0].loose;
