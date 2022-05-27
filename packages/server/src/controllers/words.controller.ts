@@ -183,19 +183,9 @@ export class WordsController {
     if (req.user.role === 'admin') {
       const reqArr = req.url.split('/');
       const wordID = Number(reqArr[reqArr.length - 1]);
-      let user: number;
       const dbRequest = MySQLService.getInstance();
       dbRequest
         .delete(`DELETE FROM vocabulary WHERE id = ${wordID}`)
-        .then(() => dbRequest.read(`SELECT user FROM vocabulary WHERE id = ${wordID}`))
-        .then((response: any) => {
-          user = response[0].user;
-          return dbRequest.create(`INSERT INTO words SET ?`, { word: response[0].word });
-        })
-        .then(() => dbRequest.read(`SELECT pts FROM user_table WHERE id = ${user}`))
-        .then((response: any) =>
-          dbRequest.update(`UPDATE user_table SET ? WHERE id = ${user}`, { pts: response[0].pts - 5 }),
-        )
         .then(() => {
           res.status(200).send({ message: 'DELETED' });
         })
@@ -215,6 +205,7 @@ export class WordsController {
         .update(`UPDATE vocabulary SET ? WHERE id =${wordID}`, { status: 1 })
         .then(() => dbRequest.read(`SELECT word, user FROM vocabulary WHERE id = ${wordID}`))
         .then((response: any) => {
+          console.log(response);
           user = response[0].user;
           return dbRequest.create(`INSERT INTO words SET ?`, { word: response[0].word });
         })
@@ -236,8 +227,17 @@ export class WordsController {
       const reqArr = req.url.split('/');
       const wordID = Number(reqArr[reqArr.length - 1]);
       const dbRequest = MySQLService.getInstance();
+      let user: number;
       dbRequest
         .update(`UPDATE vocabulary SET ? WHERE id =${wordID}`, { status: 2 })
+        .then(() => dbRequest.read(`SELECT user FROM vocabulary WHERE id = ${wordID}`))
+        .then((response: any) => {
+          user = response[0].user;
+          return dbRequest.read(`SELECT pts FROM user_table WHERE id = ${user}`);
+        })
+        .then((response: any) =>
+          dbRequest.update(`UPDATE user_table SET ? WHERE id = ${user}`, { pts: response[0].pts - 5 }),
+        )
         .then(() => {
           res.status(200).send({ message: 'DELETED' });
         })
