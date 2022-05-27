@@ -50,9 +50,9 @@ export function collectRegisterData(): boolean {
           setInputValue('registerLogin', '');
           window.location.href = res.url;
           return true;
+        } else {
+          return res.json();
         }
-
-        return res.json();
       })
       .then((result: any) => {
 
@@ -66,7 +66,9 @@ export function collectRegisterData(): boolean {
       .catch((value) => {
         console.log(value);
       });
+  } else {
+    setTextValue('registerErrorText', 'Проверьте введенные данные');
   }
-  setTextValue('registerErrorText', 'Проверьте введенные данные');
+
   return false;
 }

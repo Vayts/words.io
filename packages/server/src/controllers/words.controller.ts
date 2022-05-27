@@ -41,6 +41,7 @@ export class WordsController {
         currentTry: 0,
         win: gameValue[0],
         loose: gameValue[1],
+        wordLength,
       });
       res.status(200).end();
     });

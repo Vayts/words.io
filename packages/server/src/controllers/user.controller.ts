@@ -38,7 +38,7 @@ export class UserController {
             tryCounter: response[0].tryCounter,
             currentTry: response[0].currentTry,
             words: response[0].words,
-            length: response[0].word.length,
+            length: response[0].wordLength,
             win: response[0].win,
             loose: response[0].loose,
           });
