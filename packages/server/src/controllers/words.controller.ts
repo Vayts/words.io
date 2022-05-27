@@ -31,21 +31,25 @@ export class WordsController {
     const tryCounter = Number(reqArr[reqArr.length - 1]);
     const gameValue = getGameValue(wordLength, tryCounter);
     const dbRequest = MySQLService.getInstance();
-    dbRequest.read(`SELECT word FROM gameword_table WHERE CHAR_LENGTH(word) = ${wordLength}`).then((response: any) => {
-      const arr = response.map((el: any) => el.word).filter((el: any) => el.length === Number(wordLength));
-      const randomNum = getRandomNum(0, arr.length - 1);
-      console.log(arr[randomNum]);
-      dbRequest.update(`UPDATE user_table SET ? WHERE ID = ${req.user.id}`, {
-        word: arr[randomNum],
-        isPlaying: true,
-        tryCounter,
-        currentTry: 0,
-        win: gameValue[0],
-        loose: gameValue[1],
-        wordLength,
+    dbRequest
+      .read(`SELECT word FROM gameword_table WHERE CHAR_LENGTH(word) = ${wordLength}`)
+      .then((response: any) => {
+        const arr = response.map((el: any) => el.word).filter((el: any) => el.length === Number(wordLength));
+        const randomNum = getRandomNum(0, arr.length - 1);
+        console.log(arr[randomNum]);
+        return dbRequest.update(`UPDATE user_table SET ? WHERE ID = ${req.user.id}`, {
+          word: arr[randomNum],
+          isPlaying: true,
+          tryCounter,
+          currentTry: 0,
+          win: gameValue[0],
+          loose: gameValue[1],
+          wordLength,
+        });
+      })
+      .then(() => {
+        res.status(200).end();
       });
-      res.status(200).end();
-    });
   }
 
   checkWord(req: Request, res: Response) {
