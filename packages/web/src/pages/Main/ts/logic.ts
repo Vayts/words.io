@@ -316,6 +316,7 @@ function continueLastGame(state, obj) {
   state.currentRow = obj.currentTry;
   state.currentCol = obj.currentTry * obj.length;
   gameplay.style.display = 'flex';
+  console.log(state);
   table.append(generateUsedGameField(state.lengthCounter, state.tryCounter, words));
   state.rowList = getNodeList('.gameplay__row');
   state.colList = getNodeList('.gameplay__col');
