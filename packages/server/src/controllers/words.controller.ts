@@ -79,7 +79,7 @@ export class WordsController {
           userWord = value[0].word;
           userPts = value[0].pts;
           words = value[0].words === null ? '' : value[0].words;
-          wordAnalyse = analyseWord(word, userWord);
+          wordAnalyse = analyseWord(userWord, word);
           return dbRequest.read(`SELECT word FROM words WHERE word = "${word.toLowerCase()}"`);
         })
         .then((value: any) => {

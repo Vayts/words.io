@@ -6,6 +6,8 @@ export function getRandomNum(min: number, max: number): number {
 }
 
 export function analyseWord(userWord: string, word: string): Record<string, number[]> {
+  console.log(word);
+  console.log(userWord);
   const result: { partialMatch: number[]; fullMatch: number[]; noMatch: number[] } = {
     noMatch: [],
     partialMatch: [],
