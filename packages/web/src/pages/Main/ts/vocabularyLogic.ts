@@ -16,7 +16,7 @@ export function getVocabulary(state) {
   setDisplayNone('leaderboardBlock');
   setDisplayNone('gameplayBlock');
   setDisplayFlex('vocabularyBlock');
-  fetch('http://localhost:3000/word/vocabulary')
+  fetch('/word/vocabulary')
     .then((response) => response.json())
     .then((data) => {
       if (data.message === 'USER_DONE') {
@@ -69,7 +69,7 @@ export function adminControl(state, event) {
 }
 
 function adminControlDelete(state) {
-  fetch(`http://localhost:3000/word/admin/delete/${state.vocabularyAdmin[0].id}`).then(() => {
+  fetch(`/word/admin/delete/${state.vocabularyAdmin[0].id}`).then(() => {
     state.vocabularyAdmin.shift();
     nextAdminWord(state);
   });
@@ -77,14 +77,14 @@ function adminControlDelete(state) {
 
 
 function adminControlReject(state) {
-  fetch(`http://localhost:3000/word/admin/reject/${state.vocabularyAdmin[0].id}`).then(() => {
+  fetch(`/word/admin/reject/${state.vocabularyAdmin[0].id}`).then(() => {
     state.vocabularyAdmin.shift();
     nextAdminWord(state);
   });
 }
 
 function adminControlAdd(state) {
-  fetch(`http://localhost:3000/word/admin/add/${state.vocabularyAdmin[0].id}`).then(() => {
+  fetch(`/word/admin/add/${state.vocabularyAdmin[0].id}`).then(() => {
     state.vocabularyAdmin.shift();
     nextAdminWord(state);
   });
@@ -214,7 +214,7 @@ export function validateWord(word, messageState) {
 
 export function postWord(state) {
   const word = collectData('vocabularyForm');
-  fetch('http://localhost:3000/word/add', {
+  fetch('/word/add', {
     method: 'POST',
     body: word,
   })
@@ -272,7 +272,7 @@ export function getSortVocabulary(state): boolean {
 
 export function deleteWord(state, event) {
   if (event.target.classList.contains('vocabulary__delete-word')) {
-    fetch(`http://localhost:3000/word/delete/${event.target.parentNode.dataset.wordid}`).then(() => {
+    fetch(`/word/delete/${event.target.parentNode.dataset.wordid}`).then(() => {
       let deletedIndex;
       state.vocabulary.map((el, index) => {
         if (el.id === Number(event.target.parentNode.dataset.wordid)) {

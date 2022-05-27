@@ -56,7 +56,7 @@ export function getLeaderboard() {
   setDisplayNone('gameplayBlock');
   setDisplayNone('vocabularyBlock');
   setDisplayFlex('leaderboardBlock');
-  fetch('http://localhost:3000/user/leaderboard')
+  fetch('/user/leaderboard')
     .then((res) => res.json())
     .then((data) => {
       if (data.message === 'USER_INCLUDED') {

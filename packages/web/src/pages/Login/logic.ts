@@ -34,7 +34,7 @@ export function collectLoginInData() {
 
   if (totalValidate) {
     const data = collectData('loginInForm');
-    fetch('http://localhost:3000/auth/login', {
+    fetch('/auth/login', {
       method: 'POST',
       body: data,
     })

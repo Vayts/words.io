@@ -53,6 +53,7 @@ export class AuthController {
   }
 
   login(req: Request, res: Response) {
+    console.log(process.env['DB_USER ']);
     const dbRequest = MySQLService.getInstance();
     const query = `SELECT *
                    from user_table

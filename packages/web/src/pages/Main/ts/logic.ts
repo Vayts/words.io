@@ -82,7 +82,7 @@ export function startGame(state) {
 }
 
 export function generateWord(state) {
-  fetch(`http://localhost:3000/word/generate/${state.lengthCounter}/${state.tryCounter}`).then((value) => {});
+  fetch(`/word/generate/${state.lengthCounter}/${state.tryCounter}`).then((value) => {});
 }
 
 function fillState(state) {
@@ -99,7 +99,7 @@ async function checkWord(state, func): Promise<any> {
   const row = state.rowList[state.currentRow];
   const word = getWord(row);
   return new Promise((resolve, reject) => {
-    fetch(`http://localhost:3000/word/check`, {
+    fetch(`/word/check`, {
       method: 'POST',
       body: JSON.stringify(word),
     })
@@ -127,7 +127,7 @@ async function checkWord(state, func): Promise<any> {
 }
 
 export function loadUserInfo(state) {
-  fetch('http://localhost:3000/user/pts')
+  fetch('/user/pts')
     .then((data) => data.json())
     .then((response: any) => {
       setTextValue('userPts', response.pts);
@@ -292,7 +292,7 @@ export function endGame(state) {
 }
 
 export function checkLastGame(state) {
-  fetch('http://localhost:3000/user/last')
+  fetch('/user/last')
     .then((res) => res.json())
     .then((data) => {
       if (data.message === 'NOT_FINISHED') {

@@ -41,7 +41,7 @@ export function collectRegisterData(): boolean {
 
   if (totalValidate) {
     const data = collectData('registerForm');
-    fetch('http://localhost:3000/auth/register', {
+    fetch('/auth/register', {
       method: 'POST',
       body: data,
     })
