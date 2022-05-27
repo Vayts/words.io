@@ -45,7 +45,7 @@ export class AuthController {
         return dbRequest.create(query, column);
       })
       .then(() => {
-        res.redirect(302, '/main');
+        res.redirect(302, '/login');
       })
       .catch((value: { code: number; message: string }) => {
         res.status(value.code).send({ message: value.message });
